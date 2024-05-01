@@ -1,0 +1,139 @@
+openapi : "3.0.0"
+info:
+  title: CONTACT API
+  version: 1.0.0
+  description: An API that allows users to obtain information on all the contacts or a particular contact and also post information of a new contact
+  termsOfService: https://smartbear.com/terms-of-use
+  contact:
+    name: Kongnyuy
+    url: siddy.com
+    email: kongnyuyversi24@gmail.com
+  license: 
+    name: ContactAPI License
+    url: https://licence.foo.com
+
+servers:
+  url: http://localhost:5005/api
+  description:
+ 
+# schemes: [http, https]
+
+
+paths: 
+  /api/contacts: # defining the 1st resource which is the contacts resource
+    get: #defining the get endpoint
+      description: This endpoint returns information about all the contacts from the ContactAPI database
+      responses:
+        200:
+          description: Successful GET request
+          content:
+            application/json:
+              schema:  #defines the content a little more
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Contact'
+  
+  /api/contacts/create:
+    post:
+      description: This endpoint creates a new contact in to the contact database
+      parameters:
+        - in: body
+          name: contact
+          schema:
+            $ref: '#/components/schemas/Contact'
+      responses:
+        201:
+          description: Created Successfully
+        400:  
+          description: Bad request
+
+  /api/contacts/delete/{id}:
+    delete:
+      description: This endpoint permit the deletion
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+          format: objectId
+      responses:
+        200:
+          description: deleted successfully
+        400:
+          description: Bad request
+
+  /api/contacts/update/{id}:
+    put:
+      description: This endpoints permits the user to update information on a particular contact using the id
+      parameters:
+        - in: path
+          name: Id
+          description: ID of the contact to update
+          required: true
+          type: string
+        - in: body
+          name: contact
+          required: true
+          description: Contact informations to update
+          schema:
+            $ref: '#/components/schemas/Contact'
+      responses:
+        200:
+          description: Updated successfully
+        400:
+          description: Bad request Failed to update
+  /api/contacts/search:
+    get:
+      description: This endpoint permits the user to search for a contact
+      parameters:
+        - in: query
+          name: search
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: These are the contacts that match your search
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact'
+        404:
+          description: No Contact(s) found 
+
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        firstName: 
+          type: string
+          example: John
+        surName:
+          type: string
+          example: Doe
+        emailAddress:
+          type: string
+          format: email
+          example: john@example.com
+        phoneNumber1:
+          type: string
+          example: +237652894084
+        phoneNumber2:
+          type: string
+          example: +237652894084
+        address:
+          type: string
+          example: 123 Main St, CityVille, State, 12345, USA
+        company:
+          type: string
+        birthday:
+          type: string
+          format: date
+        jobTitle:
+          type: string
+        relationship:
+          type : string
+          enum: ['Colleague', 'Friend', 'Family', 'Other']
