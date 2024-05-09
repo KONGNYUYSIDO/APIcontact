@@ -21,7 +21,7 @@ const options = {
         },
         servers:[
             {
-                url: 'http://localhost:5005/api'
+                url: 'http://localhost:8080/api'
             }
         ],
         tags: {
@@ -31,6 +31,8 @@ const options = {
             description: 'Endpoints to manage registered users',
             name: 'TODO List',
             description: 'Endpoints to manage the TODO List',
+            name: 'Image',
+            description: 'Endpoints to manage Images',
         }
     },
     apis: ['./routes/contactRoute.js']
@@ -42,7 +44,8 @@ const app = express();
 
 //Middleware
 app.use(express.json());
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
 
 //Connecting to mongodb
 mongoose.connect( URI, {
