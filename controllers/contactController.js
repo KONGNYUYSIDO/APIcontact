@@ -5,7 +5,10 @@ export async function getAllContacts( req, res ) {
     const userId = req.user._id;
     try {
         const contacts = await Contact.find( {userId }, { firstName: 1, surName: 1, emailAddress: 1, phoneNumber1: 1, phoneNumber2: 1, _id: 0 } );
-        res.json({ status: "Success", data: contacts });
+        if (contacts.length === 0 ) {
+            return res.status( 200 ).json( { status: "Success", message: "No contact(s) to display" } );
+        }
+        res.status( 200 ).json( { status: "Success", data: contacts } );
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
