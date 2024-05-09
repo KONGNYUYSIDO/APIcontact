@@ -6,11 +6,16 @@ import { searchContact } from "../controllers/contactController.js";
 import { updateContact } from "../controllers/contactController.js";
 import { deleteContact } from "../controllers/contactController.js";
 
-import { Register } from "../controllers/userController.js";
+import { forgotPassword, Register, resetpassword } from "../controllers/userController.js";
 import { Login } from "../controllers/userController.js";
 
 import checkToken from "../middlewares/auth.js";
 import { completedTodo, createTodo, deleteTodo, getTodos, uncompletedTodo, updateTodo } from "../controllers/todoController.js";
+
+import { getAllImages, postImage } from "../controllers/imageController.js";
+
+import upload from "../middlewares/upload.js";
+
 
 
 const router = express.Router();
@@ -34,6 +39,12 @@ const router = express.Router();
  *                      type: string
  *                      example: user@gmail.com
  *                  password:
+ *                      type: string
+ *          Image:
+ *              properties:
+ *                  fileName:
+ *                      type: string
+ *                  filePath:
  *                      type: string
  *          Todo:
  *              properties:
@@ -255,7 +266,7 @@ router.delete( '/contacts/delete/:id', checkToken, deleteContact );
  *              400:
  *                  description: Bad request
  */
-router.post('/users/register', Register );
+router.post('/users/register',  Register );
 
 
 /**
@@ -285,6 +296,69 @@ router.post('/users/register', Register );
  *                  description: Bad request
  */
 router.post('/users/login', Login );
+
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/login/forgot_password:
+ *      post:
+ *          summary: Initiate Resetting password
+ *          description: Sending a reset password link to the user's email
+ *          tags:
+ *              - User Management
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              userEmail:
+ *                                  type: string
+ *                                  example: user@gmail.com
+ *                                  description": User's email
+ *          responses:
+ *              200:
+ *                  description: email sent
+ */
+router.post('/user/login/forgot_password', forgotPassword);
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/reset_password/{token}:
+ *      post:
+ *          summary: Resetting user's password
+ *          description: Resetting user's password with the help of a valid token
+ *          tags:
+ *              - User Management
+ *          parameters:
+ *              - in: path
+ *                name: token
+ *                required: true
+ *                schema:
+ *                  type: string
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          properties:
+ *                              password:
+ *                                  type: string
+ *                                  description: New password
+ *          responses:
+ *              200:
+ *                  description: password changed
+ *              400:
+ *                  description: Bad request
+ */
+router.post('/user/reset_password/:token', resetpassword );
 
 
 
@@ -451,5 +525,54 @@ router.delete('/user/delete/todo_list/:id', checkToken, deleteTodo );
 router.get('/user/todo_list/uncompleted', checkToken, uncompletedTodo );
 
 
+
+
+/**
+ * 
+ * @swagger
+ * /user/AllImages:
+ *      get:
+ *          summary: Viewing all Images
+ *          description: User can view all images added
+ *          tags:
+ *              - Images
+ *          security:
+ *              - bearerAuth: []
+ *          responses:
+ *              200:
+ *                  description: successful
+ */
+router.get('/user/AllImages', checkToken, getAllImages );
+
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/add_image:
+ *      post:
+ *          summary: Adding new files or Images
+ *          description: User can add a new Image or file
+ *          tags:
+ *              - Images
+ *          security:
+ *              - bearerAuth: []
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  multipart/form-data:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              image:
+ *                                  type: string
+ *                                  format: binary
+ *                                  description: Image file to upload
+ *          responses:
+ *              200:
+ *                  description: Successful Upload
+ */
+router.post('/user/add_image', checkToken, upload.array( "image", 12 ),  postImage );
 
 export default router;
