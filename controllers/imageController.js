@@ -21,7 +21,7 @@ export async function postImage ( req, res ) {
 
     try {
         if (!req.file) {
-            return res.status( 400 ).json( { error: "No file or Image selected" } );
+            return res.status( 404 ).json( { error: "No file or Image selected" } );
         }
         const addImage = await newImage.save();
         res.status(201).json({ status: "Success", message: "Image added successfully", data: addImage });
