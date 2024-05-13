@@ -13,7 +13,7 @@ export async function Register( req, res ) {
         const existUser = await User.findOne({ userName });
 
         if (existUser) {
-            return res.status(400).json({ status: "Failed", message: "Username already exist" });
+            return res.status(404).json({ status: "Failed", message: "Username already exist" });
         }
         const hashpassword = await bcrypt.hash(password, 10);
         const newUser = new User({ userName, userEmail, password: hashpassword });
@@ -33,12 +33,12 @@ export async function Login( req, res ) {
 
     const user = await User.findOne({ userName });
     if (!user) {
-        return res.status(401).json({ status: "Failed", message: "Invalid username or password" });
+        return res.status(404).json({ status: "Failed", message: "Invalid username or password" });
     }
 
     const validpassword = await bcrypt.compare( password, user.password );
     if (!validpassword) {
-        return res.status(401).json({ status: "Failed", message: "Invalid username or password" });
+        return res.status(404).json({ status: "Failed", message: "Invalid username or password" });
     }
 
     const token = jwt.sign({ _id: user._id }, 'c1ab1847-32a0-4ea2-af4c-ae82a037e337', {expiresIn: "20m"});
@@ -56,7 +56,7 @@ export async function forgotPassword ( req, res ) {
     //Verifying if the email exists in the db
     const user = await User.findOne( { userEmail: new RegExp( userEmail, "i") } );
     if (!user) {
-        return res.status( 400 ).json( { status: "Failed", message: "This email does not exist" } );
+        return res.status( 404 ).json( { status: "Failed", message: "This email does not exist" } );
     }
     
     // let resetToken = crypto.randomBytes(32).toString("hex");
@@ -131,7 +131,7 @@ export async function resetpassword ( req, res ) {
 
         
         if ( !password ) {
-            return res.status( 400 ).json( { message: "Please enter your password" } )
+            return res.status( 404 ).json( { message: "Please enter your password" } )
         }
 
         const decode = jwt.verify( token, process.env.JWT_SECRET_KEY )
