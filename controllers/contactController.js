@@ -6,7 +6,7 @@ export async function getAllContacts( req, res ) {
     try {
         const contacts = await Contact.find( {userId }, { firstName: 1, surName: 1, emailAddress: 1, phoneNumber1: 1, phoneNumber2: 1, _id: 0 } );
         if (contacts.length === 0 ) {
-            return res.status( 200 ).json( { status: "Success", message: "No contact(s) to display" } );
+            return res.status( 404 ).json( { status: "Success", message: "No contact(s) to display" } );
         }
         res.status( 200 ).json( { status: "Success", data: contacts } );
     } catch (error) {
