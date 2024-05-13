@@ -6,11 +6,11 @@ export async function getTodos ( req, res ) {
     try {
         const todos = await todo.find( { userId }, { _id: 0, userId: 0 } );
         if ( todos.length === 0 ) {
-            res.status( 200 ).json( { status: "Success", message: "No task(s) available in your list" } );
+            res.status( 404 ).json( { status: "Success", message: "No task(s) available in your list" } );
         }
         res.status( 200 ).json( { status: "Success", message: "Your list of different tasks", data: todos } );
     } catch (error) {
-        
+        res.status(500).json({ message: error.message });
     }
 }
 
@@ -26,7 +26,7 @@ export async function createTodo ( req, res ) {
 
     try {
         const newTodo = await newTask.save();
-        res.status( 200 ).json( { status: "successful", message: "Task added successfully", data: newTodo } );
+        res.status( 201 ).json( { status: "successful", message: "Task added successfully", data: newTodo } );
     } catch (error) {
         res.status( 500 ).json( { message: error.message } );
     }
@@ -37,9 +37,9 @@ export async function createTodo ( req, res ) {
 export async function updateTodo ( req, res ) {
     const userId = req.user._id;
     try {
-        const updateTask =await todo.findByIdAndUpdate( req.params.id, req.body, { userId, new: true } );
+        const updateTask =await todo.findByIdAndUpdate( req.params.id, req.body, { userId, new: true, fields: { _id: 0, userId: 0 } } );
         if (!updateTask) {
-            res.status( 400 ).json( { status: "failed", message: "Task does not exist" } );
+            res.status( 404 ).json( { status: "failed", message: "Task does not exist" } );
         }
         res.status( 200 ).json( { status: "Successful", message: "Task updated Successfully" } );
     } catch (error) {
@@ -79,7 +79,7 @@ export async function deleteTodo ( req, res ) {
     try {
         const deleteTask = await todo.findByIdAndDelete( req.params.id, { userId } );
         if (!deleteTask) {
-            res.status( 400 ).json( { status: "failed", message: "Could not delete a nonexistent task" } );
+            res.status( 404 ).json( { status: "failed", message: "Could not delete a nonexistent task" } );
         }
         res.status( 200 ).json( { status: "Successful", message: "Task successfully deleted" } );
     } catch (error) {
