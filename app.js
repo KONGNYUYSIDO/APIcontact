@@ -33,6 +33,8 @@ const options = {
             description: 'Endpoints to manage the TODO List',
             name: 'Image',
             description: 'Endpoints to manage Images',
+            name: 'NoteBook',
+            description: 'Endpoints to notebooks',
         }
     },
     apis: ['./routes/contactRoute.js']
