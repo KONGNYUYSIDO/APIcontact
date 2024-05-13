@@ -15,6 +15,7 @@ import { completedTodo, createTodo, deleteTodo, getTodos, uncompletedTodo, updat
 import { getAllImages, postImage } from "../controllers/imageController.js";
 
 import upload from "../middlewares/upload.js";
+import { createNote, deleteNote, getAllNotes, searchNote, updateNote } from "../controllers/notesController.js";
 
 
 
@@ -39,6 +40,14 @@ const router = express.Router();
  *                      type: string
  *                      example: user@gmail.com
  *                  password:
+ *                      type: string
+ *          Notebook:
+ *              properties:
+ *                  title:
+ *                      type: string
+ *                  content:
+ *                      type: string
+ *                  category:
  *                      type: string
  *          Image:
  *              properties:
@@ -574,5 +583,155 @@ router.get('/user/AllImages', checkToken, getAllImages );
  *                  description: Successful Upload
  */
 router.post('/user/add_image', checkToken, upload.array( "image", 12 ),  postImage );
+
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/getAll/notes/notebook:
+ *      get:
+ *          summary: Retrieving all the user's notes
+ *          description: User is able to view all the notes created
+ *          tags:
+ *              - NoteBook
+ *          security:
+ *              - bearerAuth: []
+ *          responses:
+ *              200:
+ *                  description: ok
+ *              404:
+ *                  description: Not Found
+ *              500:
+ *                  description: Internal Server Error
+ */
+router.get('/user/getAll/notes/notebook', checkToken, getAllNotes );
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/create/note/notebook:
+ *      post:
+ *          summary: Creating new note(s)
+ *          description: User has the ability to create a new note
+ *          tags:
+ *              - NoteBook
+ *          security:
+ *              - bearerAuth: []
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#components/schemas/Notebook'
+ *          responses:
+ *              201:
+ *                  description: created
+ *              500: 
+ *                  description: Internal Server Error
+ */
+router.post('/user/create/note/notebook', checkToken, createNote );
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/modify/note/{id}:
+ *      put:
+ *          summary: Editing saved note(s)
+ *          description: User can modify notes
+ *          tags:
+ *              - NoteBook
+ *          security:
+ *              - bearerAuth: []
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                required: true
+ *                format: objectId
+ *                schema:
+ *                  type: string
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#components/schemas/Notebook'
+ *          responses:
+ *              200: 
+ *                  description: ok
+ *              404: 
+ *                  description: Not Found
+ *              500: 
+ *                  description: Internal Server Error
+ *          
+ */
+router.put('/user/modify/note/:id', checkToken, updateNote );
+
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/search/note/category/notebook/{category}:
+ *      get:
+ *          summary: Searching for notes using category
+ *          description: User can search for a note using the category field
+ *          tags:
+ *              - NoteBook
+ *          security:
+ *              - bearerAuth: []
+ *          parameters:
+ *              - in: path
+ *                name: category
+ *                required: true
+ *                schema:
+ *                  type: string
+ *          responses:
+ *              200: 
+ *                  description: ok
+ *              404: 
+ *                  description: Not Found
+ *              500: 
+ *                  description: Internal Server Error
+ * 
+ */
+router.get('/user/search/note/category/notebook/:category', checkToken, searchNote );
+
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/delete/note/notebook/{id}:
+ *      delete:
+ *          summary: Deleting note(s)
+ *          description: User can delete unwanted notes
+ *          tags:
+ *              - NoteBook
+ *          security:
+ *              - bearerAuth: []
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                required: true
+ *                format: objectId
+ *                schema:
+ *                      type: string
+ *          responses:
+ *              200:
+ *                  description: ok
+ *              404: 
+ *                  description: Not Found
+ *              500: 
+ *                  description: Internal Server Error
+ */
+router.delete('/user/delete/note/notebook/:id', checkToken, deleteNote );
 
 export default router;
