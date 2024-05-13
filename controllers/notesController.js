@@ -52,7 +52,7 @@ export async function searchNote ( req, res ) {
     try {
         const notes = await Notes.find( { userId, category }, { _id: 0, userId: 0, category: 0 } );
     if ( notes.length === 0 ) {
-        return res.status(404).json({ status: "Failed", message: "No Notes were found under the category"});
+        return res.status(404).json({ status: "Failed", message: "No Notes were found under the category" + " " + category } );
     }
         res.status(200).json({ status: "Success", message: "Notes found under the category" + " " + category , notes});
       } catch (error) {
