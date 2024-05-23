@@ -155,60 +155,6 @@ export async function resetpassword ( req, res ) {
     } catch (error) {
         console.log( error );
         return res.status( 500 ).json( { message: error.message, status: "Something went wrong" } );
-    }
-        
-
-
-    //ANOTHER PART OF THE CODE
-
-
-    // const existingUser = await User.findOne( { _id: id } );
-    // if (!existingUser) {
-    //     return res.status( 400 ).json( { status: "Failed", message: "This user does not exist!" } );
-    // }
-
-    // const secret = process.env.JWT_SECRET_KEY;
-
-    // try {
-    //     // const verif = jwt.verify( token, secret );
-    //     const verif = jwt.verify( resetToken, process.env.JWT_SECRET_KEY );
-    //     const encpass = await bcrypt.hash( newPassword, 10 );
-    //     user.password = encpass;
-
-    //     await User.findByIdAndUpdate( { _id: id }, { $set: { newPassword: encpass } } );
-
-    //     res.status( 200 ).json( { status: "Success", message: "Password successfully reset" } );
-    // } catch (error) {
-    //     console.log( error );
-    //     res.status( 500 ).json( { status: "Error: Something went wrong"})
-    // }
-
-
-    // OTHER PART OF THE CODE
-
-
-    // if (token) {
-    //     jwt.verify( token, process.env.JWT_SECRET_KEY, function ( error, decodedData ) {
-    //         if (error) {
-    //             console.error('Error resetting password:', error);
-    //             res.status(500).json( { status: "Failed", message: "Error: Reset link has expired. Please try again." } );
-    //         } else {
-    //             // const response = data;
-    //             const user = userToken.findOne( { token: token } );
-    //             // const passwordHash = await bcrypt.hash( newPassword, 10);
-    //             user.password = newPassword;
-    //             user.save();
-
-    //             try {
-    //                 User.findByIdAndUpdate( { _id: User._id }, { $set: User }, { new: true } );
-    //                 res.status( 200 ).json( { status: "success", message: "Password successfully reset" } );                
-    //             } catch (error) {
-    //                 res.status(500).json( { status: "Failed", message: "Error: Something went wrong while resetting password. Please try again." } );
-    //             }
-    //         }
-    //     });
-    // } else {
-    //     return res.st( 400 ).json( { error: "Authentication error" } );
-    // }   
+    }   
         
 }
