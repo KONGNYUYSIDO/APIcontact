@@ -138,7 +138,7 @@ export async function resetpassword ( req, res ) {
 
         const user = await User.findOne( { userEmail: decode.userEmail } )
 
-        //to check if the user object exists in the db before setting the new password to it
+        //to check if the user object exists in the database before setting the new password to it
         if (!user) {
             return res.status( 404 ).json( { message: "User not found" } );
         }
