@@ -15,7 +15,7 @@ import { completedTodo, createTodo, deleteTodo, getTodos, uncompletedTodo, updat
 import { getAllImages, postImage } from "../controllers/imageController.js";
 
 import upload from "../middlewares/upload.js";
-import { createNote, deleteNote, getAllNotes, searchNote, updateNote } from "../controllers/notesController.js";
+import { createCategory, createNote, deleteNote, getAllNotes, searchNote, updateNote } from "../controllers/notesController.js";
 
 
 
@@ -47,13 +47,19 @@ const router = express.Router();
  *                      type: string
  *                  content:
  *                      type: string
- *                  category:
- *                      type: string
+ *                  categories:
+ *                      type: array
+ *                      items:
+ *                          type: string
  *          Image:
  *              properties:
  *                  fileName:
  *                      type: string
  *                  filePath:
+ *                      type: string
+ *          Category:
+ *              properties:
+ *                  name:
  *                      type: string
  *          Todo:
  *              properties:
@@ -622,11 +628,20 @@ router.get('/user/getAll/notes/notebook', checkToken, getAllNotes );
  *          security:
  *              - bearerAuth: []
  *          requestBody:
- *              required: true
- *              content:
+ *                required: true
+ *                content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#components/schemas/Notebook'
+ *                          type: object
+ *                          properties:
+ *                              title:
+ *                                  type: string
+ *                              content:
+ *                                  type: string
+ *                              categories:
+ *                                  type: array
+ *                                  items:
+ *                                      type: string
  *          responses:
  *              201:
  *                  description: created
@@ -634,6 +649,33 @@ router.get('/user/getAll/notes/notebook', checkToken, getAllNotes );
  *                  description: Internal Server Error
  */
 router.post('/user/create/note/notebook', checkToken, createNote );
+
+
+
+/**
+ * 
+ * @swagger
+ * /user/create/category/notebook:
+ *      post:
+ *          summary: Creating new categories
+ *          description: User has the ability to create a new category
+ *          tags:
+ *              - NoteBook
+ *          security:
+ *              - bearerAuth: []
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#components/schemas/Category'
+ *          responses:
+ *              201:
+ *                  description: created
+ *              500: 
+ *                  description: Internal Server Error
+ */
+router.post('/user/create/category/notebook', checkToken, createCategory );
 
 
 
