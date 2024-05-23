@@ -16,11 +16,13 @@ const notesSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        category: {
-            type: String,
-            enum: [ 'Work', 'Personal', 'Ideas', 'Meetings' ],
-            required: true,
-        },
+        categories: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'category',
+                required: true,
+            }
+        ],
     }
 );
 
