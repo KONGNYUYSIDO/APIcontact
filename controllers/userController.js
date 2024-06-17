@@ -5,7 +5,13 @@ import nodemailer from "nodemailer";
 import User from "../models/userModel.js";
 
 
-
+/**
+ * Handles user registration by checking if the username already exists, hashing the password,
+ * creating a new user, and saving it to the database.
+ * @param {Object} req - The request object containing userName, userEmail, and password.
+ * @param {Object} res - The response object used to send back the HTTP response.
+ * @returns {Promise} A promise that resolves with the response data.
+ */
 export async function Register( req, res ) {
     const { userName, userEmail, password } = req.body;
 
@@ -28,6 +34,14 @@ export async function Register( req, res ) {
     }
 }
 
+
+
+/**
+ * Handles user authentication by verifying the provided username and password.
+ * If valid, generates a JWT token for the user.
+ * @param {Object} req - The request object containing userName and password in the body.
+ * @param {Object} res - The response object used to send back the HTTP response.
+ */
 export async function Login( req, res ) {
     const { userName, password } = req.body;
 
@@ -50,6 +64,13 @@ export async function Login( req, res ) {
 
 
 
+/**
+ * Handles the process of resetting a user's password by verifying the user's email, generating a JWT token for password reset,
+ * and sending an email with a reset link to the user.
+ * 
+ * @param {Object} req - The request object containing the user's email in the body.
+ * @param {Object} res - The response object used to send back the HTTP response.
+ */
 export async function forgotPassword ( req, res ) {
     // Get user based on posted email
     const { userEmail } = req.body;
@@ -119,7 +140,14 @@ export async function forgotPassword ( req, res ) {
 }
 
 
-
+/**
+ * Handles the process of resetting a user's password.
+ * It verifies the provided token, checks if the user exists, hashes the new password,
+ * updates the user's password in the database, and returns a success or error message.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 export async function resetpassword ( req, res ) {
 
     try {
