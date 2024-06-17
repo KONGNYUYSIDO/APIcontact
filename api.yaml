@@ -160,15 +160,15 @@ components:
           items:
             type: string
     Image:
-        properties:
-            fileName:
-                type: string
-            filePath:
-                type: string
+      properties:
+        fileName:
+            type: string
+        filePath:
+            type: string
     Category:
-        properties:
-            name:
-                type: string
+      properties:
+        name:
+          type: string
     Todo:
         properties:
             task:
@@ -214,37 +214,37 @@ components:
             relationship:
                 type: string
                 enum: ['colleague', 'friend', 'family', 'other' ]
-components:
-  schemas:
-    Contact:
-      type: object
-      properties:
-        firstName: 
-          type: string
-          example: John
-        surName:
-          type: string
-          example: Doe
-        emailAddress:
-          type: string
-          format: email
-          example: john@example.com
-        phoneNumber1:
-          type: string
-          example: +237652894084
-        phoneNumber2:
-          type: string
-          example: +237652894084
-        address:
-          type: string
-          example: 123 Main St, CityVille, State, 12345, USA
-        company:
-          type: string
-        birthday:
-          type: string
-          format: date
-        jobTitle:
-          type: string
-        relationship:
-          type : string
-          enum: ['Colleague', 'Friend', 'Family', 'Other']
+# components:
+#   schemas:
+#     Contact:
+#       type: object
+#       properties:
+#         firstName: 
+#           type: string
+#           example: John
+#         surName:
+#           type: string
+#           example: Doe
+#         emailAddress:
+#           type: string
+#           format: email
+#           example: john@example.com
+#         phoneNumber1:
+#           type: string
+#           example: +237652894084
+#         phoneNumber2:
+#           type: string
+#           example: +237652894084
+#         address:
+#           type: string
+#           example: 123 Main St, CityVille, State, 12345, USA
+#         company:
+#           type: string
+#         birthday:
+#           type: string
+#           format: date
+#         jobTitle:
+#           type: string
+#         relationship:
+#           type : string
+#           enum: ['Colleague', 'Friend', 'Family', 'Other']
