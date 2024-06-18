@@ -34,6 +34,7 @@ tags:
 paths: 
   /api/contacts: # defining the 1st resource which is the contacts resource
     get: #defining the get endpoint
+      summary: List of all contacts
       description: This endpoint returns information about all the contacts from the ContactAPI database
       tags:
         - Contact Management
@@ -45,6 +46,7 @@ paths:
   
   /api/contacts/create:
     post:
+      summary: Creating a new contact
       description: This endpoint creates a new contact in to the contact database
       tags:
         - Contact Management
@@ -64,6 +66,7 @@ paths:
 
   /api/contacts/delete/{id}:
     delete:
+      summary: Deleting an existing contact
       description: This endpoint permit the deletion
       tags:
         - Contact Management
@@ -73,7 +76,7 @@ paths:
         - in: path
           name: id
           required: true
-          format: ObjectId
+          # format: ObjectId
           schema:
             type: string
       responses:
@@ -84,6 +87,7 @@ paths:
 
   /api/contacts/update/{id}:
     put:
+      summary: Updating an existing contact
       description: This endpoints permits the user to update information on a particular contact using the id
       tags:
         - Contact Management
@@ -91,9 +95,9 @@ paths:
         - bearerAuth: []
       parameters:
         - in: path
-          name: Id
+          name: id
           required: true
-          format: objectId
+          # format: objectId
           schema:
             type: string
       requestBody:
@@ -109,6 +113,7 @@ paths:
           description: Bad request Failed to update
   /api/contacts/search:
     get:
+      summary: List of all contacts that matches the searchterm
       description: This endpoint permits the user to search for a contact
       tags:
         - Contact Management
@@ -138,7 +143,7 @@ components:
     bearerAuth:
           type: http
           scheme: bearer
-          in: header
+          # in: header
   schemas:
     User:
       properties:
