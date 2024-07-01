@@ -11,14 +11,24 @@
 - [Contributing](#contributing)
 - [License](#license)
 
-## Installation
+## Getting Started
+  Follow the instructions below to set up the project on your machine locally for development and testing purposes
+
+### Requirements
+  -  **Node.js** installed
+  -  **NPM (Node Package Manager)** installed
+
+### Installing
 
 1. **Clone the repository:**
      ```bash
      git clone https://github.com/KONGNYUYSIDO/APIcontact.git
      cd APIcontact
+2. **Navigate to the project's directory:**
+     ```bash
+     cd APIcontact
      
-2. **Install dependencies:**
+3. **Install dependencies:**
       ```bash
      npm install
       
@@ -26,11 +36,12 @@
 
      Create a **.env** file and set your environment variables based on the **.env.example** file.
    
-5. **Run the application:**
+### Running the application
+  -  **Development Mode with Nodemon:**
      ```bash
      npm run dev
 
-## Project Structure
+### Project Structure
 
   -  **config/:** Contains configuration files for the application.
   -  **controllers/:** Houses controller files to handle API requests.
@@ -43,7 +54,7 @@
   -  **.env.example:** Example environment variable configurations.
     
     
-## Environment Variables
+### Environment Variables
   Create a **.env** file in the root of your project and configure the following variables:
   
         #DATABASE_STRING
