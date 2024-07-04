@@ -74,5 +74,5 @@
   Create a **.env** file and set your environment variables based on the **.env.example** file.
 
 ## Issues
-  If you encounter any issues or have suggestions, please open an [issue](#issue)
+  If you encounter any issues or have suggestions, please [open an issue](#open-an-issue)
 
